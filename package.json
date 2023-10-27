@@ -1,0 +1,11 @@
+{
+  "name": "charlie-circus",
+  "version": "1.0.0",
+  "description": "The 1984 Circus Charlie game",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "David Alvarado",
+  "license": "ISC"
+}

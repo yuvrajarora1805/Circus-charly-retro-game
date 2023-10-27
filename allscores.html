@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Charlie Circus - Scores</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <style>
+    body {
+      background-color: black;
+    }
+
+    .container {
+      overflow: hidden;
+      position: relative;
+      height: 80%;
+      width: 80%;
+      margin: auto;
+      margin-top: 20px;
+      background-color: black;
+      padding-top: 70px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .scoreName {
+      color: white;
+      font-family: "Press Start 2P", cursive;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .backToGame {
+      color: white;
+      font-family: "Press Start 2P", cursive;
+      background-color: black;
+      border-radius: 10px;
+      height: 30px;
+      cursor: pointer;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <div class="scoreName">
+        <p>Name</p>
+        <p>Score</p>
+      </div>
+    </div>
+    <div class="container">
+      <button class="backToGame" onclick="backToGame()">Back to game</button>
+    </div>
+    <script>
+      const container = document.querySelector(".container");
+      const SERVER_URL = "http://circus-charlie.herokuapp.com";
+
+      window.onload = async () => {
+        const scores = await fetch(`${SERVER_URL}/scores`);
+        const parsedScores = await scores.json();
+
+        parsedScores
+          .map(score => {
+            const scoreElement = document.createElement("div");
+            scoreElement.setAttribute("class", "scoreName");
+
+            const nameElement = document.createElement("p");
+            nameElement.innerHTML = score.name;
+
+            const scoreNumberElement = document.createElement("p");
+            scoreNumberElement.innerHTML = score.score;
+
+            scoreElement.appendChild(nameElement);
+            scoreElement.appendChild(scoreNumberElement);
+
+            return scoreElement;
+          })
+          .forEach(element => {
+            container.appendChild(element);
+          });
+      };
+
+      const backToGame = () => {
+        window.open(SERVER_URL, "_self");
+      };
+    </script>
+  </body>
+</html>
